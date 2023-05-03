@@ -5,10 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",
+    "build": "rimraf dist && tsc",
     "dev": "nodemon --watch 'src/**/*' --exec 'ts-node' ./src/server.ts",
-    "build": "tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+      "ts.check",
+      "build",
+      "add-build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
