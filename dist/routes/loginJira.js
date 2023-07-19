@@ -13,7 +13,7 @@ const router = express_1.default.Router();
 // Create a rate limiter middleware
 const limiter = (0, express_rate_limit_1.default)({
     windowMs: 60 * 1000,
-    max: 5, // Allow a maximum of 10 requests per minute
+    max: 10, // Allow a maximum of 10 requests per minute
 });
 router.post("/user", limiter, async (req, res) => {
     const { domain, email, jiraToken } = req.body;
