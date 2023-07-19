@@ -37,7 +37,9 @@ router.post("/upload", upload.single("file"), (req: Request, res: Response) => {
     selectedFile.mimetype !== "application/json"
   ) {
     // handle error when file is not in the required format
-    res.status(400).send({ error: "Invalid file format" });
+    res.status(400).send({
+      error: "Invalid file format. Please upload xlsx or json file.",
+    });
     return;
   }
 

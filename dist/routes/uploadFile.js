@@ -46,7 +46,9 @@ router.post("/upload", upload.single("file"), (req, res) => {
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" &&
         selectedFile.mimetype !== "application/json") {
         // handle error when file is not in the required format
-        res.status(400).send({ error: "Invalid file format" });
+        res.status(400).send({
+            error: "Invalid file format. Please upload xlsx or json file.",
+        });
         return;
     }
     if (selectedFile.size > 50000000) {

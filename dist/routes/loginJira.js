@@ -7,10 +7,17 @@ const express_1 = __importDefault(require("express"));
 const axios_1 = __importDefault(require("axios"));
 const crypto_js_1 = __importDefault(require("crypto-js"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 dotenv_1.default.config();
 const router = express_1.default.Router();
-router.post("/user", async (req, res) => {
+// Create a rate limiter middleware
+const limiter = (0, express_rate_limit_1.default)({
+    windowMs: 60 * 1000,
+    max: 5, // Allow a maximum of 10 requests per minute
+});
+router.post("/user", limiter, async (req, res) => {
     const { domain, email, jiraToken } = req.body;
+    console.log(domain, email, jiraToken);
     const secretKey = process.env.SECRET_KEY;
     if (!secretKey) {
         return res.status(500).json({ message: "Internal server error" });
@@ -29,7 +36,13 @@ router.post("/user", async (req, res) => {
     catch (error) {
         console.error(error);
         if (error.response && error.response.status === 401) {
-            return res.status(401).json({ message: "Unauthorized" });
+            console.log(error.response.status);
+            return res
+                .status(401)
+                .json({ message: "Unauthorized, Check email or API key" });
+        }
+        if (error.response && error.response.status === 404) {
+            return res.status(404).json({ message: "This domain is not valid" });
         }
         return res.status(500).json({ message: "Internal server error" });
     }

@@ -9,7 +9,7 @@ const uploadFile_1 = __importDefault(require("./routes/uploadFile"));
 const createIssue_1 = __importDefault(require("./routes/createIssue"));
 const loginJira_1 = __importDefault(require("./routes/loginJira"));
 const app = (0, express_1.default)();
-let PORT = process.env.PORT || 5000;
+let PORT = process.env.PORT || 4000;
 app.set("trust proxy", true);
 const whitelist = [
     "http://localhost:8000",
