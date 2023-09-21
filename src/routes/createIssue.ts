@@ -21,8 +21,7 @@ router.post("/issue", async (req: Request, res: Response) => {
   const bodyData: IssueBodyData = req.body;
   const baseUrl: string = `https://${domain}.atlassian.net/rest/api/3`;
   const ciphertext: string = jiraToken;
-  const secretKey: string =
-    "6eb495a40e5f50b839fcfaa5e3e0d37b6bd17fbd887c4a1ac28f9d0eb25bde01";
+  const secretKey: string = process.env.SECRET_KEY;
   const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
   const token: string = bytes.toString(CryptoJS.enc.Utf8);
 
