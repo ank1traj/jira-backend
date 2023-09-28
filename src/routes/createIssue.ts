@@ -25,6 +25,10 @@ router.post("/issue", async (req: Request, res: Response) => {
   const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
   const token: string = bytes.toString(CryptoJS.enc.Utf8);
 
+  if (!secretKey) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
   try {
     const response = await axios.post(`${baseUrl}/issue`, bodyData, {
       headers: {
