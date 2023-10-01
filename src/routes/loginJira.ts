@@ -11,7 +11,7 @@ const router: Router = express.Router();
 // Create a rate limiter middleware
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 10, // Allow a maximum of 10 requests per minute
+  max: 5, // Allow a maximum of 10 requests per minute
 });
 
 interface UserRequestBody {
